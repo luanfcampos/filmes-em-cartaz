@@ -10,23 +10,33 @@ const App = () => {
     handleLoad()
   },[])
 
-  const handleLoad = async () => {
-    setLoading(true)
-    let response = await fetch('https://api.b7web.com.br/cinema/')
-    let json = await response.json()
-    setMovies(json.reverse())
-    setLoading(false)
-  }
+  // const handleLoad = async () => {
+  //   try {
+  //     setLoading(true)
+  //     let response = await fetch('https://api.b7web.com.br/cinema/')
+  //     let json = await response.json()
+  //     setMovies(json.reverse())
+  //     setLoading(false)
+  //   } catch(e){
+  //     setTimeout(()=>setLoading(false),2000)
+  //     console.error(e)
+  //   }
 
-  // const handleLoad = () => {
-  //   fetch('https://api.b7web.com.br/cinema/')
-  //     .then((response)=>{
-  //       return response.json()
-  //     })
-  //     .then((json)=>{
-  //       setMovies(json.reverse())
-  //     })
   // }
+
+  const handleLoad = () => {
+    fetch('https://api.b7web.com.br/cinema/')
+      .then((response)=>{
+        return response.json()
+      })
+      .then((json)=>{
+        setMovies(json.reverse())
+      })
+      .catch((e)=>{
+        setTimeout(()=>setLoading(false),2000)
+        console.error(e)
+      })
+  }
 
   return (
 
@@ -47,6 +57,14 @@ const App = () => {
             </path>
           </svg>
         </div>
+      }
+      {!loading && movies.length === 0 &&
+        <div className="flex flex-col items-center justify-center gap-8 fixed z-10 w-screen h-screen bg-indigo-900">
+        <p className="w-80 text-center">Nossos Churruminos perderam a Xinforimpola, por favor tente novamente mais tarde...</p>
+        <iframe src="https://giphy.com/embed/j9TCx9tcOxVGYDL53r" width="300" height="auto" frameBorder="0" className="giphy-embed rounded-b-full" allowFullScreen></iframe>
+
+      </div>
+
       }
       <header id="header" className="flex flex-col items-center justify-center py-10 bg-indigo-900 w-full">
         <h1 className=" font-display text-6xl text-center">Filmes em Cartaz</h1>
