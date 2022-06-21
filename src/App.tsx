@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
+import { Header } from "./components/Header";
+import { Section } from "./components/Section"
+import { Footer } from "./components/Footer";
 import { Movie } from "./types/Movie";
+import { Loading } from "./components/Loading";
+import { Error } from "./components/Error";
 
 const App = () => {
 
@@ -9,6 +14,7 @@ const App = () => {
   useEffect(()=> {
     handleLoad()
   },[])
+
 
   const handleLoad = async () => {
     try {
@@ -41,47 +47,17 @@ const App = () => {
 
     <div className="flex flex-col items-center justify-between gap-8 bg-indigo-800 min-h-screen text-indigo-300">
       {loading &&
-        <div className="flex flex-col items-center justify-center gap-2 fixed z-10 w-screen h-screen bg-indigo-900">
-          <p>Carregando...</p>
-          <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="80px" height="80px" viewBox="0 0 50 50" xmlSpace="preserve">
-          <path fill="#a5b4fc" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-            <animateTransform attributeType="xml"
-              attributeName="transform"
-              type="rotate"
-              from="0 25 25"
-              to="360 25 25"
-              dur="0.6s"
-              repeatCount="indefinite"/>
-            </path>
-          </svg>
-        </div>
+        <Loading/>
       }
       {!loading && movies.length === 0 &&
-        <div className="flex flex-col items-center justify-center gap-8 fixed z-10 w-screen h-screen bg-indigo-900">
-        <p className="w-80 text-center">Nossos Churruminos perderam a Xinforimpola, por favor tente novamente mais tarde...</p>
-        <iframe src="https://giphy.com/embed/j9TCx9tcOxVGYDL53r" width="300" height="auto" frameBorder="0" className="giphy-embed rounded-b-full" allowFullScreen></iframe>
-
-      </div>
-
+        <Error/>
       }
-      <header id="header" className="flex flex-col items-center justify-center py-10 bg-indigo-900 w-full">
-        <h1 className=" font-display text-6xl text-center">Filmes em Cartaz</h1>
-        <h2 className="text-xl font-bold">Total de Filmes: {movies.length}</h2>
-      </header>
+      <Header data={movies} />
 
-      <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-w-7xl gap-y-10 gap-x-5 px-5">
-        {movies.map((item,index)=>(
-          <div>
-            <img src={item.avatar} alt="" className="w-full rounded-md"/>
-            <p className="text-center pt-1 font-semibold">{item.titulo}</p>
-          </div>
-        ))}
-      </section>
+      <Section data={movies}/>
 
-      <footer className="bg-indigo-900 py-4 px-8 mt-10 w-full flex justify-center items-center">
-        <p className="max-w-sm text-center">Feito por <a className="font-bold text-indigo-100" href="https://github.com/luanfcampos">Luan Campos</a> durante o curso de desenvolvimento web fullstack da <a className="font-bold text-indigo-100" href="https://b7web.com.br/fullstack/">B7Web</a></p>
-      </footer>
+      <Footer />
+
     </div>
   );
 }
