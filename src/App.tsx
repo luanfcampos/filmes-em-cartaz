@@ -10,33 +10,32 @@ const App = () => {
     handleLoad()
   },[])
 
-  // const handleLoad = async () => {
-  //   try {
-  //     setLoading(true)
-  //     let response = await fetch('https://api.b7web.com.br/cinema/')
-  //     let json = await response.json()
-  //     setMovies(json.reverse())
-  //     setLoading(false)
-  //   } catch(e){
-  //     setTimeout(()=>setLoading(false),2000)
-  //     console.error(e)
-  //   }
-
-  // }
-
-  const handleLoad = () => {
-    fetch('https://api.b7web.com.br/cinema/')
-      .then((response)=>{
-        return response.json()
-      })
-      .then((json)=>{
-        setMovies(json.reverse())
-      })
-      .catch((e)=>{
-        setTimeout(()=>setLoading(false),2000)
-        console.error(e)
-      })
+  const handleLoad = async () => {
+    try {
+      setLoading(true)
+      let response = await fetch('https://api.b7web.com.br/cinema/')
+      let json = await response.json()
+      setMovies(json.reverse())
+      setLoading(false)
+    } catch(e){
+      setTimeout(()=>setLoading(false),2000) //settimeout apenas para que o carregamento apareca por mais um tempo
+      console.error(e)
+    }
   }
+
+  // const handleLoad = () => {
+  //   fetch('https://api.b7web.com.br/cinema/')
+  //     .then((response)=>{
+  //       return response.json()
+  //     })
+  //     .then((json)=>{
+  //       setMovies(json.reverse())
+  //     })
+  //     .catch((e)=>{
+  //       setTimeout(()=>setLoading(false),2000)
+  //       console.error(e)
+  //     })
+  // }
 
   return (
 
